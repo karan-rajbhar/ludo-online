@@ -1,35 +1,18 @@
 <template>
-  <div class="ludo-board">
-    <template v-for="row in 11" :key="row">
-      <template v-for="col in 11" :key="col">
-        <div :class="['square', getSquareColor(row, col)]">{{ getSquareText(row, col) }}</div>
-      </template>
-    </template>
-  </div>
+
+  <span @click="generateRandomNumber">Generate Number</span>
+  <span>{{random}}</span>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import {useRandomNumberGenerator} from '@/helpers/random'
 
-const getSquareColor = (row: number, col: number): string => {
-  // Define your logic to determine square color here
-  const colors: string[] = [
-    'red', '', '', '', '', '', '', '', '', '', 'green',
-    '', '', '', '', '', '', '', '', '', '', '',
-    '', '', '', '', '', '', '', '', '', '', '',
-    '', '', '', '', '', '', '', '', '', '', '',
-    '', '', '', '', '', '', '', '', '', '', '',
-    '', '', '', '', '', '', '', '', '', '', '',
-    '', '', '', '', '', '', '', '', '', '', '',
-    '', '', '', '', '', '', '', '', '', '', '',
-    '', '', '', '', '', '', '', '', '', '', '',
-    '', '', '', '', '', '', '', '', '', '', '',
-    'yellow', '', '', '', '', '', '', '', '', '', 'blue',
-  ];
-  return colors[(row - 1) * 11 + col - 1];
-};
 
-const getSquareText = (row: number, col: number): string => `${row}-${col}`;
+
+const {random,generateRandomNumber} = useRandomNumberGenerator();
+let board = [];
+
 </script>
 
 <style scoped>
