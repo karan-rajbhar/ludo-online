@@ -15,11 +15,11 @@
       <li v-for="(position, pawn) in player2.pawns">{{ pawn }} {{ position }}</li>
     </ul>
   </div>
-  <div class="player-init">
+  <!-- <div class="player-init">
     <div class="pawn" v-for="(position, pawn) in player1.pawns">
-    {{ position }}
+
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script setup lang="ts">
@@ -30,10 +30,39 @@ const { random, generateRandomNumber } = useRandomNumberGenerator()
 
 let player1 = new Player('karan', 'red')
 let player2 = new Player('aashu', 'yellow')
+let userInput: number | null = null
+
+// Function to handle user input
+function handleUserInput(input: any) {
+  userInput = input
+  console.log('User input: ' + userInput)
+}
+function timedPrompt() {
+  const timer = setTimeout(function () {
+    if (!userInput) {
+      // If no user input after 5 seconds, select a random value
+      userInput = Math.floor(Math.random() * 4) + 1;
+      console.log("Random value selected: " + userInput);
+    }
+  }, 5000);
+
+  const promptDialog = prompt("Enter something:");
+
+  // When the user provides input, clear the timer
+  clearTimeout(timer);
+
+  // Handle the user input
+  handleUserInput(promptDialog);
+}
 
 function shuffleAndMovePawn() {
   generateRandomNumber(6)
-
+  timedPrompt()
+  console.log(userInput)
+  console.log(player1)
+  player1.pawns[userInput]=player1.pawns[userInput]+random.value
+  console.log(player1)
+  // When the user provides input, clear the timer
 }
 </script>
 
@@ -67,24 +96,18 @@ function shuffleAndMovePawn() {
   background-color: #ffff33;
 }
 
-.player-init{
+.player-init {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
   border: 50px solid;
   padding: 20px;
-  height: 100px;
-  width: 100px;
 }
 
-.player-init>* {
-  flex: 1 1 50%;
-}
-
-.pawn{
+.pawn {
   border-radius: 50%;
   background-color: #ff3333;
+  padding: 4px;
 }
-
 </style>
