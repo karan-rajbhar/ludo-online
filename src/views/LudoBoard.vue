@@ -11,11 +11,13 @@
       </ul>
     </div>
   </div>
+  <Board :players="players" />
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 import Player from '@/helpers/player';
+import Board from '@/components/board/Board.vue';
 
 let players = ref<Player[]>([]);
 let currentPlayerIndex = ref(0);
