@@ -67,7 +67,12 @@ function checkCollision(pawnIndex: number) {
 }
 
 function checkWin() {
-  // Implement win condition check
+  let currentPlayer = players.value[currentPlayerIndex.value];
+  let won = currentPlayer.pawns.every(pawn => pawn.position === 51);
+  if (won) {
+    alert(`${currentPlayer.name} won!`);
+  }
+
 }
 
 </script>
