@@ -70,18 +70,7 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
 
 
 <style scoped>
-:deep(.el-dialog) {
-  max-width: 700px;
-  min-height: 700px !important;
-}
-
-:deep(.el-tabs__content){
-  display: flex;
-  margin: 30px;
-  padding: 30px;
-  flex-direction: row;
-  gap: 10px;
-  position: relative;
-  height: 100%;
+#home-view {
+  min-height: 100vh; /* Adjust as needed */
 }
 </style>
