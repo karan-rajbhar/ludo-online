@@ -12,7 +12,7 @@
           <n-space>
             <n-radio v-for="player in playersOption" :key="player.value" :value="player.value" :label="player.label" >
               <PawnPiece :color="player.value" />
-
+              
             </n-radio>
           </n-space>
         </n-radio-group>
@@ -39,10 +39,9 @@ const playersOption = [
 ]
 
 
-function handleClick(tab, event) {
+function handleClick(tab: any, event: any) {
   console.log(tab, event)
 }
-
 
 
 </script>
