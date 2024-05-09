@@ -2,14 +2,14 @@
   <div class="home">
     <n-button type="primary" @click="dialogVisible = true"> Start Game </n-button>
   </div>
+  <div class="board">
+    {{ game }}
+  </div>
 
-  <n-modal
-    v-model:show="dialogVisible"
-    class="player-select-modal"
-  >
-  <template #header-extra>
-        Config player
-      </template>
+  <n-modal v-model:show="dialogVisible" class="player-select-modal">
+    <template #header-extra>
+      Config player
+    </template>
     <div class="player-selector">
       <div class="player-row">
         <n-input placeholder="Player 1 Name" v-model:value="player1.name" />
@@ -19,17 +19,17 @@
         <PawnPiece :color="player1.color" />
       </div>
       <div class="player-row">
-        <n-input placeholder="Player 2 Name"  v-model:value="player2.name"/>
+        <n-input placeholder="Player 2 Name" v-model:value="player2.name" />
         <n-popselect v-model:value="player2.color" :options="player2Options">
           <n-button>{{ colorMap[player2.color] }}</n-button>
         </n-popselect>
         <PawnPiece :color="player2.color" />
       </div>
       <n-button type="default" @click="dialogVisible = false"> Cancel </n-button>
-      <n-button type="primary" @click="dialogVisible = false" :disabled="isSubmitDisabled"> Start Game </n-button>
+      <n-button type="primary"  :disabled="isSubmitDisabled" @click="startGame">  Start Game </n-button>
     </div>
-    
-    
+
+
   </n-modal>
 </template>
 
@@ -42,6 +42,17 @@ const dialogVisible = ref(false)
 interface player {
   name: string
   color: string
+}
+
+
+
+class Game {
+  player1: player
+  player2: player
+  constructor(player1: player, player2: player) {
+    this.player1 = player1
+    this.player2 = player2
+  }
 }
 
 const colorMap: Record<string, string> = {
@@ -58,6 +69,8 @@ const options = [
   { value: 'yellow', label: 'Yellow' }
 ]
 
+const game = ref<Game | null>(null)
+
 const player1 = ref<player>({ name: '', color: 'red' })
 const player2 = ref<player>({ name: '', color: 'green' })
 
@@ -72,6 +85,13 @@ const player2Options = computed(() => {
 const isSubmitDisabled = computed(() => {
   return !player1.value.name || !player2.value.name
 })
+
+const startGame = () => {
+  console.log('Game started')
+  game.value = new Game(player1.value, player2.value)
+  dialogVisible.value = false
+}
+
 
 
 
