@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  ludo-online:
+    build : .
+    restart: always
+    command: npm run dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    container_name: ludo-online
+
+
+
