@@ -37,11 +37,18 @@
 import { computed, ref } from 'vue'
 import PawnPiece from '@/components/PawnPiece.vue'
 
+
 const dialogVisible = ref(false)
+
+interface pawn {
+  color: string
+  position: number
+}
 
 interface player {
   name: string
   color: string
+  pawns: pawn[]
 }
 
 
@@ -49,9 +56,12 @@ interface player {
 class Game {
   player1: player
   player2: player
-  constructor(player1: player, player2: player) {
-    this.player1 = player1
-    this.player2 = player2
+
+  constructor(players: player[] ) {
+    this.player1 = players[0]
+    this.player2 = players[1]
+    this.player1.pawns = initPawn(this.player1.color)
+    this.player2.pawns = initPawn(this.player2.color)
   }
 }
 
@@ -71,8 +81,13 @@ const options = [
 
 const game = ref<Game | null>(null)
 
-const player1 = ref<player>({ name: '', color: 'red' })
-const player2 = ref<player>({ name: '', color: 'green' })
+let initPawn = (color: string) => {
+  return Array(4).fill(0).map((_, index) => {
+    return { color, position: index }
+  })
+}
+const player1 = ref<player>({ name: '', color: 'red' , pawns: []})
+const player2 = ref<player>({ name: '', color: 'green' , pawns: []})
 
 const player1Options = computed(() => {
   return options.filter((option) => option.value !== player2.value.color)
@@ -88,7 +103,7 @@ const isSubmitDisabled = computed(() => {
 
 const startGame = () => {
   console.log('Game started')
-  game.value = new Game(player1.value, player2.value)
+  game.value = new Game([player1.value, player2.value])
   dialogVisible.value = false
 }
 
