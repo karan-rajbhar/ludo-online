@@ -4,6 +4,11 @@
   </div>
   <div class="board">
     {{ game }}
+    <div class="row" v-for="(row, i) in board" :key="i">
+    <div class="cell" v-for="(cell, j) in row" :key="j">
+      <PawnPiece v-if="cell" :color="cell.color" />
+    </div>
+  </div>
   </div>
 
   <n-modal v-model:show="dialogVisible" class="player-select-modal">
@@ -107,7 +112,7 @@ const startGame = () => {
   dialogVisible.value = false
 }
 
-
+const board=Array(8).fill(Array(8).fill(null))
 
 
 </script>
