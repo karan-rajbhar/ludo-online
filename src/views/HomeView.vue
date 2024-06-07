@@ -114,6 +114,9 @@ const startGame = () => {
 
 const board=Array(8).fill(Array(8).fill(null))
 
+const roleDice = () => {
+  return Math.floor(Math.random() * 6) + 1
+}
 
 </script>
 
