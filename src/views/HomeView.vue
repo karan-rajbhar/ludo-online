@@ -15,25 +15,11 @@
     <template #header-extra>
       Config player
     </template>
-    <div class="player-selector">
-      <div class="player-row">
-        <n-input placeholder="Player 1 Name" v-model:value="player1.name" />
-        <n-popselect v-model:value="player1.color" :options="player1Options">
-          <n-button>{{ colorMap[player1.color] }}</n-button>
-        </n-popselect>
-        <PawnPiece :color="player1.color" />
-      </div>
-      <div class="player-row">
-        <n-input placeholder="Player 2 Name" v-model:value="player2.name" />
-        <n-popselect v-model:value="player2.color" :options="player2Options">
-          <n-button>{{ colorMap[player2.color] }}</n-button>
-        </n-popselect>
-        <PawnPiece :color="player2.color" />
-      </div>
-      <n-button type="default" @click="dialogVisible = false"> Cancel </n-button>
-      <n-button type="primary"  :disabled="isSubmitDisabled" @click="startGame">  Start Game </n-button>
-    </div>
-
+    <PlayerSelector
+      :players="[player1, player2]"
+      :colorMap="colorMap"
+      @cancel="dialogVisible = false"
+      @startGame="startGame"/>
 
   </n-modal>
 </template>
@@ -41,6 +27,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import PawnPiece from '@/components/PawnPiece.vue'
+import PlayerSelector from '@/views/PlayerSelector.vue'
 
 
 const dialogVisible = ref(false)
@@ -70,19 +57,6 @@ class Game {
   }
 }
 
-const colorMap: Record<string, string> = {
-  red: 'Red',
-  green: 'Green',
-  blue: 'Blue',
-  yellow: 'Yellow'
-}
-
-const options = [
-  { value: 'red', label: 'Red' },
-  { value: 'green', label: 'Green' },
-  { value: 'blue', label: 'Blue' },
-  { value: 'yellow', label: 'Yellow' }
-]
 
 const game = ref<Game | null>(null)
 
